@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <base href="/">
+    <title>MV</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+    <header>
+        <img src="logo.svg" alt="ロゴ" class="header-logo">
+        <h1 id="page-title"></h1>
+    </header>
+    <main>
+        <div id="list-view">
+            <section id="movie-section">
+                <h2>MV</h2>
+                <div id="movie-list" class="grid-container"></div>
+            </section>
+            <section id="song-section" class="hidden">
+                <h2>DTM</h2>
+                <div id="song-list" class="grid-container"></div>
+            </section>
+        </div>
+
+        <div id="detail-view" class="hidden">
+            <button id="movie-back-button" class="back-btn">◀ 一覧に戻る</button>
+
+            <div class="detail-container">
+                <div class="detail-left">
+                    <h2 id="detail-title">作品名</h2>
+                    <div class="meta-info">
+                        <p><strong>アーティスト情報</strong> <br><span id="detail-creators" style="white-space: pre-wrap;"></span></p>
+                        <p><strong>長さ　：</strong><span id="detail-duration"></span></p>
+                        <p><strong>制作年：</strong><span id="detail-year"></span></p>
+                        <!-- キャプション追加 -->
+                        <div class="caption-block" style="margin-top: 15px;">
+                            <strong>作品説明</strong><br>
+                            <span id="detail-caption" style="display: block; margin-top: 5px; white-space: pre-wrap;"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-right">
+                    <div id="youtube-container" class="custom-video-container" style="display: none;">
+                    </div>
+                    <div id="video-container" class="custom-video-container">
+                        <video id="detail-video" preload="none"></video>
+
+                        <div class="video-controls">
+                            <button id="btn-play-pause" class="control-btn btn-center-bottom">
+                                <img id="play-pause-icon" src="images/play.svg" alt="再生">
+                            </button>
+                            <button id="btn-fullscreen" class="control-btn btn-top-right">⛶</button>
+                            <div class="volume-control-wrapper vol-bottom-right">
+                                <img src="images/headphone.svg" alt="音量" class="volume-icon">
+                                <input type="range" id="volume-slider" class="volume-slider" min="0" max="1" step="0.05" value="1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="song-detail-view" class="hidden">
+            <button id="song-back-button" class="back-btn">◀ 一覧に戻る</button>
+            
+            <div class="detail-container">
+                <div class="detail-left">
+                    <h2 id="song-detail-title">アルバム/楽曲名</h2>
+                    <div class="meta-info">
+                        <p><strong>アーティスト情報</strong> <br><span id="song-detail-artist" style="white-space: pre-wrap;"></span></p>
+                        <p><strong>形式　：</strong><span id="song-detail-format"></span></p>
+                        <p><strong>長さ　：</strong><span id="song-detail-duration"></span></p>
+                        <p><strong>制作年：</strong><span id="song-detail-year"></span></p>
+                        <!-- キャプション追加 -->
+                        <div class="caption-block" style="margin-top: 15px;">
+                            <strong>作品説明</strong><br>
+                            <span id="song-detail-caption" style="display: block; margin-top: 5px; white-space: pre-wrap;"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="song-detail-center" class="detail-center hidden">
+                    <h3>トラックリスト</h3>
+                    <ul id="album-track-list" class="track-list"></ul>
+                </div>
+
+                <div class="detail-right song-right-area">
+                    <div class="song-art-wrapper">
+                        <img id="song-detail-art" src="" alt="Album Art">
+                    </div>
+                    
+                    <div class="audio-controls-area">
+                        <div class="audio-btn-and-volume-row">
+                            <button id="btn-audio-play-pause" class="control-btn-audio">
+                                <img id="audio-play-icon" src="images/play.svg" alt="再生">
+                            </button>
+                            <div class="audio-volume-control-wrapper">
+                                <img src="images/headphone.svg" alt="音量" class="volume-icon">
+                                <input type="range" id="audio-volume-slider" class="audio-vol-slider" min="0" max="1" step="0.05" value="1">
+                            </div>
+                        </div>
+                        
+                        <div class="audio-seek-row">
+                            <span id="audio-time-current">0:00</span>
+                            <input type="range" id="audio-seek-bar" class="seek-bar" min="0" max="100" value="0">
+                            <span id="audio-time-duration">0:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <audio id="detail-audio" preload="none"></audio>
+    </main>
+
+    <script src="vendor/hls.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

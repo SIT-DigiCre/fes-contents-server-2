@@ -1,0 +1,27 @@
+services:
+  generator:
+    build:
+      context: .
+      dockerfile: Dockerfile.generator
+    profiles: ["generate"]
+    volumes:
+      - ./movies:/data/movies
+      - ./songs:/data/songs
+      - ./public:/data/public
+      - ./config.json:/data/config.json:ro
+    environment:
+      CONFIG_PATH: /data/config.json
+
+  web:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - web-root:/usr/share/nginx/html
+      - ./public:/usr/share/nginx/html/public:ro
+      - ./movies:/usr/share/nginx/html/movies:ro
+      - ./songs:/usr/share/nginx/html/songs:ro
+
+volumes:
+  web-root:

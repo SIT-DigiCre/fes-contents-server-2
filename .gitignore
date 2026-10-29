@@ -1,0 +1,11 @@
+# 作品の実体とメタデータ（ローカルに置く。Git には含めない）
+movies/*
+!movies/.gitkeep
+songs/*
+!songs/.gitkeep
+
+# 生成される配信リストと HLS
+media_list.json
+public/media_list.json
+public/site.json
+public/hls/

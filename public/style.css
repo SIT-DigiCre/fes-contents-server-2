@@ -1,0 +1,464 @@
+:root {
+    --bg-color: #f4f4f5;
+    --card-bg: #ffffff;
+    --text-color: #333333;
+    --primary: #007bff;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    /* タッチ時のダブルタップズームを無効化しレスポンスを向上 */
+    touch-action: manipulation;
+}
+
+header {
+    background-color: var(--card-bg);
+    /* 上下のpaddingを小さくして高さを抑える */
+    padding: 10px 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    /* ロゴの絶対配置の基準にするため追加 */
+    position: relative;
+
+    /* 中身を上下左右の中央に配置 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* ヘッダーの最低高さを指定 */
+    min-height: 24px;
+}
+
+/* 左端に配置するロゴのスタイル */
+.header-logo {
+    position: absolute;
+    left: 16px;
+    /* 左端から少し余白を取る */
+    height: 28px;
+    /* ヘッダーの高さに合わせて適宜調整してください */
+    width: auto;
+}
+
+/* h1要素の高さを抑える */
+header h1 {
+    margin: 0;
+    font-size: 1.4rem;
+    /* 文字サイズを少し小さく */
+}
+
+main {
+    padding: 16px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+}
+
+.card {
+    background: var(--card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s;
+    /* タップ領域を確保 */
+    min-height: 60px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:active {
+    transform: scale(0.98);
+}
+
+.card img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 12px;
+}
+
+.card-title {
+    margin: 0 0 8px 0;
+    font-size: 1.1rem;
+}
+
+audio,
+video {
+    width: 100%;
+    margin-top: auto;
+    outline: none;
+}
+
+main {
+    padding: 16px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 一覧画面だけを、見やすい 800px 幅に制限します */
+#list-view {
+    /* max-width: 800px; */
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* 表示・非表示切り替え用 */
+.hidden {
+    display: none !important;
+}
+
+/* 戻るボタン */
+#back-button {
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-bottom: 20px;
+    background-color: var(--card-bg);
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#back-button:active {
+    transform: scale(0.98);
+}
+
+/* --- 詳細画面レイアウト（全画面幅を活用した左右分割） --- */
+#detail-view {
+    width: 100%;
+}
+
+.detail-container {
+    display: flex;
+    flex-direction: row;
+    /* 横並び */
+    gap: 24px;
+    width: 100%;
+    align-items: flex-start;
+    /* 上端を揃える */
+}
+
+/* 左側：作品情報エリア */
+.detail-left {
+    flex: 1;
+    /* 幅の比率1 */
+    min-width: 250px;
+    max-width: 320px;
+    /* 文字が読みやすいように最大幅を制限 */
+    background: var(--card-bg);
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+.meta-info p {
+    margin-bottom: 16px;
+    line-height: 1.5;
+    font-size: 1.1rem;
+}
+
+/* 右側：動画プレイヤーエリア */
+.detail-right {
+    flex: 3;
+    /* 残りの広大なスペースをすべて動画に割り当て（比率3） */
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 動画コンテナ：画面幅いっぱいに広がりつつ、16:9 の比率を維持 */
+.custom-video-container {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+}
+
+#detail-video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* === カスタムコントローラー（位置やサイズは維持） === */
+.video-controls {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    
+    /* フェードイン・アウトのアニメーション設定 */
+    transition: opacity 0.3s ease-in-out;
+    opacity: 1;
+}
+
+/* 3秒経過後に付与される透明化クラス */
+.video-controls.controls-hidden {
+    opacity: 0;
+}
+
+/* ボタン共通設定 */
+.control-btn {
+    pointer-events: auto;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+.control-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+/* 中央下部：再生/停止（黒い円を消す） */
+.btn-center-bottom {
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 64px;
+    height: 64px;
+    background: transparent; /* 黒い円の背景を透明に */
+    padding: 0; /* ズレ補正のパディングを削除 */
+}
+.btn-center-bottom:hover {
+    background: transparent; /* ホバー時の黒背景も消す */
+}
+
+/* SVGアイコンそのもののスタイル */
+.btn-center-bottom img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* 背景が白い動画でもアイコンが見えるように、アイコン自体に影を落とす */
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); 
+}
+
+/* 右上：最大化 */
+.btn-top-right {
+    top: 16px;
+    right: 16px;
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    font-size: 24px;
+}
+
+/* 右下：音量 */
+.vol-bottom-right {
+    pointer-events: auto;
+    position: absolute;
+    bottom: 40px;
+    right: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.volume-control-wrapper .volume-icon {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1);
+}
+
+.volume-slider {
+    width: 100px;
+    cursor: pointer;
+}
+
+/* フルスクリーン時のスタイル調整 */
+.custom-video-container:fullscreen {
+    background: #000;
+}
+
+.custom-video-container:fullscreen .btn-center-bottom {
+    bottom: 40px;
+    width: 80px;
+    height: 80px;
+    font-size: 32px;
+}
+
+.custom-video-container:fullscreen .vol-bottom-right {
+    bottom: 60px;
+    right: 40px;
+}
+
+.custom-video-container:fullscreen .btn-top-right {
+    top: 32px;
+    right: 32px;
+    width: 64px;
+    height: 64px;
+    font-size: 32px;
+}
+
+/* View Transitions API 用の指定 */
+#detail-video {
+    /* 遷移先（動画プレイヤー）に名前をつける */
+    view-transition-name: hero-video;
+}
+
+/* アニメーションの速度と滑らかさ（イージング）を調整 */
+::view-transition-old(hero-video),
+::view-transition-new(hero-video) {
+    animation-duration: 0.5s;
+    animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* ▼ 楽曲詳細画面の追加スタイル ▼ */
+.back-btn {
+    padding: 12px 24px; font-size: 1.1rem; cursor: pointer;
+    margin-bottom: 20px; background-color: var(--card-bg);
+    border: 1px solid #ccc; border-radius: 8px;
+}
+
+/* 音声作品の詳細画面レイアウト */
+#song-detail-view .detail-left {
+    align-self: flex-start;
+}
+
+#song-detail-view .detail-center {
+    align-self: flex-start;
+}
+
+/* アルバム時の中央トラックリスト */
+.detail-center {
+    flex: 2; min-width: 200px;
+    background: var(--card-bg); padding: 24px; border-radius: 8px;
+    display: flex; flex-direction: column;
+    max-height: calc(100vh - 150px);
+    overflow: hidden;
+}
+.track-list {
+    list-style: none; padding: 0; margin: 0;
+    overflow-y: auto;
+    flex: 1;
+}
+.track-item {
+    padding: 12px; margin-bottom: 8px; background: #f9f9f9;
+    border-radius: 4px; cursor: pointer; transition: background 0.2s;
+}
+.track-item:hover { background: #e0e0e0; }
+.track-item.active { background: #d0ebff; border-left: 4px solid var(--primary); }
+
+/* 右側：オーディオプレイヤー領域 */
+.song-right-area {
+    background: transparent; box-shadow: none; 
+    display: flex; flex-direction: column; gap: 16px;
+}
+
+.song-art-wrapper {
+    width: 30%; height: auto;
+    margin: auto auto; /* 中央寄せ */
+    background: #000; border-radius: 8px; overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#song-detail-art {
+    width: 100%; height: auto; object-fit: cover;
+    view-transition-name: hero-audio; /* アニメーション用 */
+}
+
+/* オーディオコントローラー類 */
+.audio-controls-area {
+    background: var(--card-bg); padding: 16px; border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.audio-btn-row {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 16px; justify-content: center;
+}
+
+.audio-btn-and-volume-row {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 16px; position: relative; min-height: 50px;
+}
+
+.audio-btn-and-volume-row .control-btn-audio {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.audio-btn-and-volume-row .audio-volume-control-wrapper {
+    margin-left: auto;
+}
+
+.control-btn-audio {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--primary); border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin: 0 auto;
+}
+
+.control-btn-audio img { width: 32px; height: 32px; filter: brightness(0) invert(1); }
+
+.audio-volume-control-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.audio-volume-control-wrapper .volume-icon {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1);
+    flex-shrink: 0;
+}
+
+.audio-vol-slider { width: 100px; cursor: pointer; }
+
+/* シークバー */
+.audio-seek-row {
+    display: flex; align-items: center; gap: 12px; font-size: 0.9rem;
+}
+.seek-bar { flex: 1; cursor: pointer; }
+
+::view-transition-old(hero-audio), ::view-transition-new(hero-audio) {
+    animation-duration: 0.5s; animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* 音声作品の場合、headphone.svgを黒色でfill */
+#song-detail-view .audio-volume-control-wrapper .volume-icon {
+    filter: brightness(0);
+}
+
+/* 音声作品の時、音量調節バーを右寄せ */
+#song-detail-view .audio-volume-control-wrapper {
+    justify-content: flex-end;
+}
+
+/* 音声作品の画面において、再生・停止ボタンを画面左右中央に配置 */
+#song-detail-view .audio-btn-row {
+    justify-content: center;
+}
+
+/* 音声作品のナビゲーション（オーディオコントローラー）の設定 */
+#song-detail-view .audio-controls-area {
+    background: var(--card-bg);
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}

@@ -1,0 +1,14 @@
+{
+  "name": "展示作品配信システム",
+  "short_name": "作品配信",
+  "display": "standalone",
+  "background_color": "#f4f4f5",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
