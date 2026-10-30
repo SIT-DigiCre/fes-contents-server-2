@@ -20,13 +20,28 @@
 docker compose run --rm generator
 ```
 
-配信を開始します。会場の端末からは `http://<このPCのIP>/` を開きます。
+配信を開始します。HTTPSを使う場合は、事前にCloudflare APIトークンを設定します。
 
 ```
-docker compose up web
+copy .env.example .env
 ```
 
-作品を追加・差し替えたあとは、もう一度 `docker compose run --rm generator` を実行してください。再実行するまで一覧と HLS は古いままです。変更のない mp4 はスキップされます。
+`.env` の `CLOUDFLARE_API_TOKEN` には、`digicre.net` ゾーンに限定した次の権限を持つトークンを設定してください。
+
+- Zone:Read
+- DNS:Edit
+
+その後、配信を開始します。
+
+```
+docker compose up -d
+```
+
+`sfes26.digicre.net` のDNS Challengeで証明書を取得し、証明書の更新もCaddyが自動で行います。インターネット経由でアクセスする場合は、ルーターのTCP 80/443をこのPCへ転送してください。
+
+会場内だけで使う場合、公開DNSの `sfes26.digicre.net` は会場内PCへ到達できないため、会場のDNSまたは各端末のhosts設定で、この名前をこのPCのLAN内IPへ解決させる必要があります。Caddyが証明書を取得した後は、端末から `https://sfes26.digicre.net/` を開きます。
+
+作品を追加・差し替えたあとは、もう一度 `docker compose run --rm generator` を実行してください。再実行するまで一覧とHLSは古いままです。変更のないmp4はスキップされます。
 
 作品ファイルと生成物は Git に含めず、各環境のローカルに置いてください。
 

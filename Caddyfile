@@ -1,0 +1,7 @@
+sfes26.digicre.net {
+    tls {
+        dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+    }
+
+    reverse_proxy web:80
+}
